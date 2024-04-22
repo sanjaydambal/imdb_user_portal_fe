@@ -3,10 +3,14 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as farStar, faStarHalfAlt } from '@fortawesome/free-regular-svg-icons';
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import './Movies.css'
 
 const Movies = () => {
     const [movies, setMovies] = useState([]);
     const apiUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:4001";
+    const [showDialogueBox,setShowDialogueBox] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchMovies();
@@ -21,21 +25,32 @@ const Movies = () => {
         }
     };
 
-    const handleRating = async (movieId, rating) => {
-        try {
-            console.log(rating)
-            const updatedMovies = movies.map((movie) => {
-                if (movie.id === movieId) {
-                    return { ...movie, userRating: rating };
-                }
-                return movie;
-            });
-            setMovies(updatedMovies);
-        } catch (error) {
-            console.error('Error rating movie:', error);
-        }
-    };
-
+    // const handleRating = async (movieId, rating) => {
+    //     try {
+    //         console.log(rating)
+    //         const updatedMovies = movies.map((movie) => {
+    //             if (movie.id === movieId) {
+    //                 return { ...movie, userRating: rating };
+    //             }
+    //             return movie;
+    //         });
+    //         setMovies(updatedMovies);
+    //     } catch (error) {
+    //         console.error('Error rating movie:', error);
+    //     }
+    // };
+    const isLoggedIn = true
+const handleRating = async() => {
+    
+    setShowDialogueBox(true)
+}
+const handleLogin = () => {
+    navigate('/login');
+    setShowDialogueBox(false)
+}
+const handleCancel = () => {
+    setShowDialogueBox(false)
+}
     return (
         <div>
             <header className="bg-gray-800 text-white py-4">
@@ -73,6 +88,24 @@ const Movies = () => {
                     </div>
                 </div>
             ))}
+            {showDialogueBox && (
+                <div className="modal-overlay">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h2 className="modal-title">Login Required</h2>
+                            </div>
+                            <div className="modal-body">
+                                <p>You need to login to rate the movie</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+                                <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
