@@ -10,7 +10,7 @@ const SignUp = () => {
     });
 
     const apiUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:4001";
-
+const [showErrorModal,setShowErrorModal] = useState(false)
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -22,9 +22,12 @@ const SignUp = () => {
             console.log('Signup successful', response.data);
         } catch (error) {
             console.error('Error signing up:', error.response.data.error);
+            setShowErrorModal(true)
         }
     };
-
+const handleCancel = () => {
+    setShowErrorModal(false)
+}
     return (
         <div className="signup-container">
             <h2 className="signup-title">Signup</h2>
@@ -43,6 +46,24 @@ const SignUp = () => {
                 </div>
                 <button type="submit">Sign Up</button>
             </form>
+            {showErrorModal && (
+                <div className="modal-overlay">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h2 className="modal-title">Error</h2>
+                            </div>
+                            <div className="modal-body">
+                                <p>Error during signup . Please try again</p>
+                            </div>
+                            <div className="modal-footer">
+                                
+                                <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
