@@ -23,11 +23,8 @@ const Movies = () => {
 
     const handleRating = async (movieId, rating) => {
         try {
-            // Send rating to backend
-            console.log(rating);
-            // Update local state or fetch movies again
-            // For demonstration, we'll just update the local state
-            const updatedMovies = movies.map(movie => {
+            console.log(rating)
+            const updatedMovies = movies.map((movie) => {
                 if (movie.id === movieId) {
                     return { ...movie, userRating: rating };
                 }
@@ -46,9 +43,22 @@ const Movies = () => {
             </header>
             {movies.map((movie) => (
                 <div key={movie.id} className="mb-8">
-                    <h3>{movie.title}</h3>
+                    <div className="flex justify-around items-center mb-2">
+                        <h3 className="text-xl font-semibold mr-4">{movie.title}</h3>
+                        <img src={movie.poster_url} alt={movie.title} width="250" height="200" />
+                        <div className="flex items-center">
+                            <div className="text-yellow-500 mr-2">
+                                {
+                                    movie.rating && [...Array(Math.floor(movie.rating))].map((_, index) => (
+                                        <FontAwesomeIcon key={index} icon={farStar} />
+                                    ))}
+                                {movie.rating && movie.rating % 1 !== 0 && <FontAwesomeIcon icon={faStarHalfAlt} />}
+                                {!movie.rating && "No ratings"}
+                            </div>
+                            <span >{movie.rating || "Not Rated"}</span>
+                        </div>
+                    </div>
                     <p className="text-gray-600 mb-4">{movie.description}</p>
-                    <img src={movie.poster_url} alt={movie.title} width="250" height="200" />
                     <div>
                         {[...Array(5)].map((_, index) => (
                             <button
