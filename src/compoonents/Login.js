@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({setIsLoggedIn,setUserName}) => {
     const [formData, setFormData] = useState({
         usernameOremail: '',
         password: ''
     });
+    const navigate = useNavigate();
     const [showErrorModal,setShowErrorModal] = useState(false)
     const apiUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:4001";
     const handleChange = (e) => {
@@ -17,13 +19,24 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post(`${apiUrl}/api/login`, formData);
-            console.log('Login successful', response.data);
-            // Handle successful login (e.g., redirect to dashboard)
+            if (response && response.data) {
+                console.log('Login successful', response.data);
+                sessionStorage.setItem('userId', response.data?.user?.id);
+                sessionStorage.setItem('token', response.data?.token);
+                sessionStorage.setItem('username', response.data?.user?.username);
+                setUserName(response.data?.user?.username);
+                setIsLoggedIn(true);
+                navigate("/");
+            } else {
+                console.error('Empty or invalid response received');
+                setShowErrorModal(true);
+            }
         } catch (error) {
-            console.error('Error logging in:', error.response.data.error);
-            setShowErrorModal(true)
+            console.error('Error logging in:', error.response ? error.response.data.error : error.message);
+            setShowErrorModal(true);
         }
     };
+    
     const handleCancel = () => {
         setShowErrorModal(false)
     }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Signup.css'
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -8,7 +9,7 @@ const SignUp = () => {
         email: "",
         password: ""
     });
-
+const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:4001";
 const [showErrorModal,setShowErrorModal] = useState(false)
     const handleChange = (e) => {
@@ -20,6 +21,7 @@ const [showErrorModal,setShowErrorModal] = useState(false)
         try {
             const response = await axios.post(`${apiUrl}/api/signup`, formData);
             console.log('Signup successful', response.data);
+            navigate('/login')
         } catch (error) {
             console.error('Error signing up:', error.response.data.error);
             setShowErrorModal(true)
