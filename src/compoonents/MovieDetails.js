@@ -10,7 +10,7 @@ const MovieDetails = () => {
     const [movie, setMovie] = useState(null);
     const [userRating, setUserRating] = useState(null);
     const [showLoginDialog, setShowLoginDialog] = useState(false); // State to control login popup
-    const apiUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:4001";
+    const apiUrl = process.env.REACT_APP_API_BASE_URL || "https://imdb-user-portal-be.onrender.com";
     const { movieId } = useParams();
     const token = sessionStorage.getItem('token');
     useEffect(() => {

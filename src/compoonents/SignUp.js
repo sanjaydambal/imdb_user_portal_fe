@@ -10,7 +10,7 @@ const SignUp = () => {
         password: ""
     });
 const navigate = useNavigate();
-    const apiUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:4001";
+    const apiUrl = process.env.REACT_APP_API_BASE_URL || "https://imdb-user-portal-be.onrender.com";
 const [showErrorModal,setShowErrorModal] = useState(false)
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

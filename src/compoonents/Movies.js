@@ -9,7 +9,7 @@ const Movies = ({ isLoggedIn }) => {
     const [movies, setMovies] = useState([]);
     const [userRatings, setUserRatings] = useState({});
     const [showLoginDialog, setShowLoginDialog] = useState(false);
-    const apiUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:4001";
+    const apiUrl = process.env.REACT_APP_API_BASE_URL || "https://imdb-user-portal-be.onrender.com";
     const navigate = useNavigate();
     const {movieId} = useParams();
     const {userId} = useParams();
