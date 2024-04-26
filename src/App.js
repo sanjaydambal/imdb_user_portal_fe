@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Movies from './compoonents/Movies';
 import Login from './compoonents/Login';
 import SignUp from './compoonents/SignUp';
+import MovieDetails from './compoonents/MovieDetails';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,6 +59,7 @@ const [userName,setUserName] = useState("")
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
 
           <Route path="/signup" element={<SignUp />} />
+          <Route path='/movies/:movieId' element={<MovieDetails/>}/>
         </Routes>
       </div>
     </Router>
